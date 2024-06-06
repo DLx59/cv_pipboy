@@ -1,0 +1,186 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+$monofonto-font-url: '/fonts/monofonto.ttf';
+$background-image-url: '/images/pip-boy_overlay.png';
+
+@font-face {
+  font-family: 'Monofonto';
+  src: url($monofonto-font-url) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  @apply relative;
+  background-color: #10170f;
+  color: rgb(var(--foreground-rgb));
+  font-family: 'Monofonto', sans-serif;
+  overflow:hidden;
+}
+
+@layer utilities {
+  header {
+    &.container {
+      .navbar {
+        .header {
+          .menu {
+            .nav-item {
+              border-bottom: 1px solid #00ff00;
+              padding-right: 12px;
+              padding-left: 12px;
+              transition: border 0.3ms ease;
+
+              &:first-child {
+                &:before {
+                  content: "";
+                  position: absolute;
+                  display: block;
+                  height: 1px;
+                  width: 66px;
+                  top: 33px;
+                  left: 0;
+                  background-color: #00ff00;
+                }
+              }
+
+              &:last-child {
+                &:after {
+                  content: "";
+                  position: absolute;
+                  display: block;
+                  height: 1px;
+                  width: 66px;
+                  top: 33px;
+                  right: 0;
+                  background-color: #00ff00;
+                }
+              }
+
+              &.active {
+                border-top: 1px solid #00ff00;
+                border-left: 1px solid #00ff00;
+                border-right: 1px solid #00ff00;
+                border-bottom: 1px solid transparent;
+              }
+
+              a {
+                color: #00ff00;
+                text-decoration: none;
+                text-transform: uppercase;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .home {
+    .overlay-container {
+      .overlay {
+        @apply fixed pointer-events-none;
+        max-width: inherit;
+        width: 1000px;
+      }
+    }
+
+    .screen {
+      @apply absolute flex justify-center;
+      background-color: #10170f;
+      top: 124px;
+      left: 195px;
+      width: 406px;
+      height: 313px;
+      border-radius: 4rem;
+      z-index: -1;
+      animation: colorPulse 5s infinite ease-in-out;
+
+      &:before {
+        @apply pointer-events-none;
+        animation: wave 3s infinite ease-in-out;
+        content: "";
+        height: 4vh;
+        left: 0;
+        opacity: 0;
+        position: absolute;
+        right: 0;
+        z-index: -1;
+      }
+
+      &:after {
+        @apply pointer-events-none;
+        background-image: linear-gradient(transparent, transparent 3px, #222);
+        background-size: 4px 4px;
+        bottom: 0;
+        content: "";
+        left: 0;
+        pointer-events: none;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 2;
+      }
+
+      .screen-reflection {
+        position: absolute;
+        background: linear-gradient(150deg, #fff, rgba(0, 0, 0, 0));
+        opacity: 0.07;
+        width: 423px;
+        height: 406px;
+        margin: -32px 0 0 35.2px;
+        border-radius: 4rem;
+        z-index: -2;
+      }
+    }
+  }
+}
+
+@keyframes colorPulse {
+  0%, 100% {
+    color: #0c0;
+  }
+  48%, 52% {
+    color: #090;
+  }
+  50% {
+    color: #060;
+  }
+}
+
+@keyframes wave {
+  0% {
+    top: -50px;
+  }
+  20% {
+    box-shadow: 0 -5vh 10vh #0c0;
+    opacity: 0;
+  }
+  48%, 52% {
+    box-shadow: 0 -10vh 20vh #090;
+  }
+  50% {
+    box-shadow: 0 -10vh 20vh #060;
+    opacity: 1;
+  }
+  100% {
+    box-shadow: 0 -10vh 20vh #0c0;
+    top: 400px;
+    opacity: 0;
+  }
+}
